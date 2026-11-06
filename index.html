@@ -155,6 +155,8 @@
   .contact a:hover{padding-left:8px;color:var(--cyan)}
   .contact .k{font-family:var(--mono);font-size:.72rem;color:var(--dim);width:68px;flex-shrink:0}
   @media(max-width:760px){.two{grid-template-columns:1fr}}
+  .rescta{display:flex;gap:10px;margin-bottom:10px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+  .rescta .btn{padding:11px 14px;font-size:.86rem;flex:1;justify-content:center}
 
   footer{padding:50px 0 64px;text-align:center;color:var(--dim);font-size:.84rem;
     border-top:1px solid var(--line);font-family:var(--mono)}
@@ -256,6 +258,7 @@
     <p class="lede">I turn raw LLM capability into <b>shipped product</b> — agentic systems, RAG pipelines, and the auth, state and orchestration that make them survive real users. Built an entire <b>MCP integration layer</b>, a natural-language workflow builder, and RAG serving at 99.3% uptime.</p>
     <div class="cta">
       <a class="btn p" href="#work">Explore the build ↓</a>
+      <a class="btn g" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener">View résumé ↗</a>
       <a class="btn g" href="mailto:srp.official.1682@gmail.com">Start a conversation</a>
     </div>
   </div>
@@ -432,6 +435,10 @@
         <p>Based in Pune · work in English, Hindi &amp; Marathi · open to on-site, hybrid or remote.</p>
       </div>
       <div class="panel contact" id="contact">
+        <div class="rescta">
+          <a class="btn p" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener">View résumé</a>
+          <a class="btn g" href="Suraj_Pawar_Resume.pdf" download>Download PDF</a>
+        </div>
         <a href="mailto:srp.official.1682@gmail.com"><span class="k">email</span>srp.official.1682@gmail.com</a>
         <a href="tel:+918767707264"><span class="k">phone</span>+91 87677 07264</a>
         <a href="https://www.linkedin.com/in/suraj-rajesh-pawar-a08077220a" target="_blank" rel="noopener"><span class="k">linkedin</span>/in/suraj-rajesh-pawar</a>
@@ -592,7 +599,7 @@
 
   /* scripted fallback knowledge */
   var kb=[
-    {p:["why hire","why should","why you","why pick","why choose"],r:"Because I close the gap between a demo and a product. I ship, I debug the ugly live-only failures, and I care about cost and correctness — not just notebook accuracy. Hand me an LLM capability and I'll make it something people can actually use."},
+    {p:["why hire","why should","why you","why pick","why choose","best choice","best candidate","best person","right fit","good fit","right person","fit for","best fit","suitable","a fit","why are you"],r:"Honestly? Because I bridge the gap most can't — from demo to a product that survives real users. I've shipped an MCP integration layer with full OAuth, a 199-activity agent that cut LLM cost ~46%, RAG at +40–55% precision, and an OCR engine at 99–100% recall — and I fixed the live-only failures that only show up in production (a JWT bug denying every logged-in user, a model that passed 8 review rounds but failed execution). Tell me what your opening needs and I'll map my experience to it point by point. For specifics: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>."},
     {p:["availab","hiring","open to","open for","looking for","notice period","joining","relocat","opportunit","vacan","position","recruit"],r:"Yes — I'm open to AI/ML and AI-product roles right now (on-site, hybrid or remote). Fastest way in is email: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>."},
     {p:["best","strongest","favou","favor","proud","impressive","top project"],r:"Probably the MCP &amp; Connector Integration Layer at MetaFlow — it lets the platform connect any remote MCP server on demand, with full OAuth (DCR + PKCE), 8+ hardened connectors and a prompt-injection guardrail. Hard problem, and it's in production."},
     {p:["mcp","agent","agentic","orchestr","react","langgraph","workflow","automation"],r:"Agentic systems are my core. I built a 199-activity ReAct agent that turns plain English into executable workflows, plus a pure-MCP layer so it can use any MCP server's tools. Cut LLM cost ~46% with on-demand retrieval instead of stuffing the prompt."},
@@ -615,7 +622,7 @@
     return "Good question — I don't have a canned answer for that one. For anything specific, email me at <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a> and I'll get back fast. Meanwhile, ask about my projects, stack, or availability.";
   }
 
-  var quick=["What do you do?","Best project","Are you available?","Tech stack","Contact"];
+  var quick=["What do you do?","Why I'm a fit","Best project","Tech stack","Are you available?","Contact"];
   function addQuick(){ qwrap.innerHTML=''; quick.forEach(function(q){ var b=document.createElement('button'); b.className='qc'; b.textContent=q; b.onclick=function(){ask(q);}; qwrap.appendChild(b); }); }
   function bubble(html,who){ var d=document.createElement('div'); d.className='bub '+who; d.innerHTML=html; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; }
   function typing(){ var d=document.createElement('div'); d.className='typing'; d.id='tp'; d.innerHTML='<i></i><i></i><i></i>'; msgs.appendChild(d); msgs.scrollTop=msgs.scrollHeight; }
