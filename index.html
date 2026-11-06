@@ -683,7 +683,7 @@
      site uses the built-in scripted answers. Your API key lives ONLY in the
      Worker (server-side) — never here, never in the browser.
      ======================================================================== */
-  var ENDPOINT = ""; // e.g. "https://suraj-bot.yourname.workers.dev"
+  var ENDPOINT = "/api/chat"; // Vercel serverless function (same origin). On GitHub Pages this 404s and the bot falls back to scripted answers.
 
   var EMAIL="srp.official.1682@gmail.com";
   var fab=document.getElementById('fab'), win=document.getElementById('chat'),
