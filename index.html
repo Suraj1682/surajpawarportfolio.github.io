@@ -58,7 +58,7 @@
   .hero .wrap{position:relative;z-index:2}
   .hgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
   .hleft{text-align:left}
-  .hgrid h1{font-size:clamp(2.1rem,5vw,4.4rem);white-space:nowrap}
+  .hgrid h1{font-size:clamp(2rem,4.6vw,4.2rem);white-space:nowrap;letter-spacing:-.01em}
   .hero h1 .word{display:inline-block;white-space:nowrap}
   .hleft .lede{max-width:530px}
   @media(max-width:880px){.hgrid{grid-template-columns:1fr;gap:38px}}
@@ -225,6 +225,21 @@
   .proj .ptitle{min-width:0}
   .proj .ptitle h3{line-height:1.2}
   .proj .ptitle .org{margin-top:5px}
+  /* per-project data flow + betterment */
+  .flowstrip{display:flex;align-items:center;flex-wrap:wrap;gap:6px;margin:18px 0 14px}
+  .fs{font-family:var(--mono);font-size:.72rem;padding:7px 11px;border-radius:8px;border:1px solid var(--line2);background:rgba(255,255,255,.04);color:var(--ink);white-space:nowrap}
+  .fs.key{border-color:rgba(34,211,238,.45);color:var(--cyan);background:rgba(34,211,238,.08)}
+  .fa{position:relative;width:26px;height:14px;flex-shrink:0}
+  .fa::before{content:"";position:absolute;top:50%;left:0;right:2px;height:1.5px;transform:translateY(-50%);background:linear-gradient(90deg,var(--violet),var(--cyan));opacity:.4}
+  .fa i{position:absolute;top:50%;width:5px;height:5px;border-radius:50%;margin-top:-2.5px;background:var(--cyan);box-shadow:0 0 6px var(--cyan);animation:flowright 1.6s linear infinite}
+  @keyframes flowright{0%{left:-2px;opacity:0}25%{opacity:1}75%{opacity:1}100%{left:22px;opacity:0}}
+  .better{display:flex;align-items:center;flex-wrap:wrap;gap:9px;padding:12px 15px;border-radius:12px;margin-bottom:20px;background:rgba(139,92,246,.08);border:1px solid rgba(139,92,246,.22);font-size:.82rem}
+  .better .blabel{font-family:var(--mono);font-size:.64rem;color:var(--violet-lt);text-transform:uppercase;letter-spacing:.06em}
+  .bbefore{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(255,255,255,.3)}
+  .barrow{color:var(--cyan);font-weight:700}
+  .bafter{color:var(--ink);font-weight:600}
+  .bgain{margin-left:auto;font-family:var(--mono);font-size:.74rem;color:var(--cyan);background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.3);padding:5px 11px;border-radius:30px;white-space:nowrap}
+  @media(max-width:600px){.bgain{margin-left:0}}
 
   /* CHAT WIDGET */
   #fab{position:fixed;right:24px;bottom:24px;z-index:40;width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;
@@ -400,6 +415,8 @@
         <span class="ptag">Agentic AI</span>
       </div>
       <p>A pure-MCP system letting a no-code platform connect <b>any</b> remote MCP server on demand — via a generic plugin in the agent's tool-orchestration layer, reusing the existing request contract with no new API surface.</p>
+      <div class="flowstrip"><span class="fs">Agent request</span><span class="fa"><i></i></span><span class="fs">MCP plugin</span><span class="fa"><i></i></span><span class="fs key">OAuth · DCR+PKCE</span><span class="fa"><i></i></span><span class="fs">Tool discovery</span><span class="fa"><i></i></span><span class="fs">Connector call</span><span class="fa"><i></i></span><span class="fs key">401 → refresh + retry</span><span class="fa"><i></i></span><span class="fs">Result</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">a new API surface per integration</span><span class="barrow">→</span><span class="bafter">one generic plugin, reused contract</span><span class="bgain">8+ connectors · 0 infra deps</span></div>
       <ul>
         <li>Full OAuth 2.0 (Dynamic Client Registration + PKCE) with static-client fallback, proven end-to-end across Slack, Jira, GitHub, Notion &amp; Linear; live tool discovery (19–27 tools/server) with confirmation-gating on destructive actions</li>
         <li>Hardened 8+ enterprise connectors with automatic token refresh across 11 — a shared 401 detector refreshes &amp; retries before the agent ever sees a failure; encrypted-at-rest credentials, per-user/org scoping, vendor-side revocation</li>
@@ -415,6 +432,8 @@
         <span class="ptag">LLM Systems</span>
       </div>
       <p>A connector-aware ReAct agent turning plain English into executable drag-and-drop workflows across 199 activities — deterministic, durable, cheaper to run.</p>
+      <div class="flowstrip"><span class="fs">Plain English</span><span class="fa"><i></i></span><span class="fs">ReAct agent · LangGraph</span><span class="fa"><i></i></span><span class="fs key">On-demand retrieval</span><span class="fa"><i></i></span><span class="fs">Structured JSON contract</span><span class="fa"><i></i></span><span class="fs">Executable workflow</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">always-injected catalog · 2 LLM calls · in-memory state</span><span class="barrow">→</span><span class="bafter">on-demand retrieval · 1 call · Postgres checkpointer</span><span class="bgain">−46% LLM cost</span></div>
       <ul>
         <li>Cut LLM operating cost ~46% via on-demand, vector-less (PageIndex-style) retrieval; deterministic builds through a structured JSON contract that removed a second LLM call</li>
         <li>Postgres-backed LangGraph checkpointer — state durable across restarts &amp; instances, with session resume/list/delete</li>
@@ -430,6 +449,8 @@
         <span class="ptag">RAG</span>
       </div>
       <p>A persistent, org/project-scoped knowledge-base layer with reusable KBs and a measured retrieval pipeline.</p>
+      <div class="flowstrip"><span class="fs">Ingest</span><span class="fa"><i></i></span><span class="fs">Chunk + summary</span><span class="fa"><i></i></span><span class="fs">Embed · 768-dim</span><span class="fa"><i></i></span><span class="fs key">Hybrid search</span><span class="fa"><i></i></span><span class="fs">Grounded answer</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">small-model re-rank (~8s / question)</span><span class="barrow">→</span><span class="bafter">measured with RAGAS, re-rank cut</span><span class="bgain">no gain → removed</span></div>
       <ul>
         <li>Pluggable embeddings seam (OpenAI / Gemini, 768-dim) with a full ingest → store → retrieve package and a KB-only workflow node</li>
         <li>Hybrid search (semantic + keyword rank-fusion) with ingest-time summaries and optional small-model re-rank</li>
@@ -444,6 +465,8 @@
         <span class="ptag">Vision / ML</span>
       </div>
       <p>A standalone service turning any file — native, scanned or handwritten — into structure-preserved Markdown, HTML &amp; a JSON block tree with a quality verdict.</p>
+      <div class="flowstrip"><span class="fs">File in</span><span class="fa"><i></i></span><span class="fs key">Tilt / lighting correction</span><span class="fa"><i></i></span><span class="fs">VLM OCR</span><span class="fa"><i></i></span><span class="fs">Structure rebuild</span><span class="fa"><i></i></span><span class="fs">Markdown / JSON + verdict</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">raw scan / skewed photo</span><span class="barrow">→</span><span class="bafter">corrected + per-page quality score</span><span class="bgain">up to 100% recall</span></div>
       <ul>
         <li>Native, scanned and handwritten input handled end to end (Docling + PyMuPDF / OpenCV, native Office readers)</li>
         <li>Word-recall 99–100% on text formats, up to 100% on corrected photos; 211 test checks</li>
@@ -458,6 +481,8 @@
         <span class="ptag">Model Engineering</span>
       </div>
       <p>Model-level work to run strong models accurately and cheaply on constrained hardware — fine-tuning, quantization and inference benchmarking, measured honestly.</p>
+      <div class="flowstrip"><span class="fs">Base model</span><span class="fa"><i></i></span><span class="fs">LoRA / QLoRA fine-tune</span><span class="fa"><i></i></span><span class="fs key">GGUF quantize · sub-4-bit</span><span class="fa"><i></i></span><span class="fs">Inference</span><span class="fa"><i></i></span><span class="fs">Live-execution eval</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">full-precision · GPU-only</span><span class="barrow">→</span><span class="bafter">sub-4-bit GGUF · CPU-capable</span><span class="bgain">per-page cost modelled</span></div>
       <ul>
         <li>Fine-tuned vision-language OCR models with LoRA / QLoRA on Kaggle GPUs — benchmarked against a 55.7% zero-shot baseline and reported honestly when fine-tuning didn't beat it</li>
         <li>Benchmarked GGUF quantization via llama.cpp down to sub-4-bit; produced real CPU-only inference numbers (two-stage pipeline, 5/5 accuracy at 495s/page) and a per-page cost model</li>
@@ -473,6 +498,8 @@
         <span class="ptag">Applied ML</span>
       </div>
       <p>Led the move off a hosted API to a self-hosted model, and built dashboard versioning from scratch.</p>
+      <div class="flowstrip"><span class="fs">Gemini API</span><span class="fa"><i></i></span><span class="fs">SLM eval harness</span><span class="fa"><i></i></span><span class="fs key">Live ClickHouse execution</span><span class="fa"><i></i></span><span class="fs">Self-hosted model</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">structural-only checks (8 rounds)</span><span class="barrow">→</span><span class="bafter">live-execution validation</span><span class="bgain">caught a broken model</span></div>
       <ul>
         <li>SLM eval harness benchmarking open models (Gemma 12B, Qwen) for NL-to-SQL with live ClickHouse execution — caught a model whose queries parsed but failed to run, missed by 8 prior structural-only rounds</li>
         <li>Three-tier (major/data/minor) versioning with no-op detection and pre-refresh checkpoints</li>
@@ -487,6 +514,8 @@
         <span class="ptag">RAG</span>
       </div>
       <p>A production RAG system and a multilingual sentiment pipeline at real scale across Marathi, Hindi &amp; English.</p>
+      <div class="flowstrip"><span class="fs">5,000+ docs</span><span class="fa"><i></i></span><span class="fs">ETL ingest</span><span class="fa"><i></i></span><span class="fs">Heading-based chunk</span><span class="fa"><i></i></span><span class="fs key">FAISS + Qdrant · HNSW</span><span class="fa"><i></i></span><span class="fs">Redis session</span><span class="fa"><i></i></span><span class="fs">Answer</span></div>
+      <div class="better"><span class="blabel">Betterment</span><span class="bbefore">flat index · 2.5s latency</span><span class="barrow">→</span><span class="bafter">HNSW + metadata filter · 300ms</span><span class="bgain">+40–55% precision</span></div>
       <ul>
         <li>Hybrid FAISS + Qdrant search: +40–55% retrieval precision, latency 2.5s → 300ms via HNSW indexing &amp; heading-based chunking</li>
         <li>Automated ingestion of 5,000+ documents with ETL &amp; validation at 99.3% uptime on AWS</li>
@@ -552,7 +581,7 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* name letter drop */
-  var host=document.getElementById('name'), words="Suraj Pawar".split(' '), html="", idx=0;
+  var host=document.getElementById('name'), words="SURAJ PAWAR".split(' '), html="", idx=0;
   words.forEach(function(w,wi){
     html+='<span class="word">';
     for(var j=0;j<w.length;j++){
