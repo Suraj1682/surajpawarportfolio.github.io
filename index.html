@@ -200,6 +200,9 @@
   .picon{width:42px;height:42px;border-radius:12px;border:1px solid var(--line2);flex-shrink:0;margin-right:16px;
     background:linear-gradient(140deg,rgba(139,92,246,.2),rgba(34,211,238,.1));display:flex;align-items:center;justify-content:center}
   .picon svg{width:22px;height:22px;stroke:var(--cyan);fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .proj .ptitle{min-width:0}
+  .proj .ptitle h3{line-height:1.2}
+  .proj .ptitle .org{margin-top:5px}
 
   /* CHAT WIDGET */
   #fab{position:fixed;right:24px;bottom:24px;z-index:40;width:62px;height:62px;border-radius:50%;border:none;cursor:pointer;
@@ -461,7 +464,7 @@
 
     <div class="proj reveal">
       <div class="ptop">
-        <div><h3>Production RAG + Multilingual NLP</h3><div class="org">Freelance · The Strelema</div></div>
+        <div><h3>Production RAG + Multilingual NLP</h3><div class="org">The Strelema · Feb 2025 – May 2026</div></div>
         <span class="ptag">RAG</span>
       </div>
       <p>A production RAG system and a multilingual sentiment pipeline at real scale across Marathi, Hindi &amp; English.</p>
@@ -503,7 +506,7 @@
     </div>
     <div class="two reveal">
       <div class="panel about">
-        <p>I'm an AI/ML engineer who ships. Over ~1.5 years — across full-time and freelance work — I went from mechanical engineering into building production LLM systems: agentic workflows, RAG, and the plumbing (auth, state, connectors) that makes them real.</p>
+        <p>I'm an AI/ML engineer who ships. Over ~1.5 years of full-time work — first at The Strelema, then at Yukosa — I went from mechanical engineering into building production LLM systems: agentic workflows, RAG, computer vision, and the plumbing (auth, state, connectors) that makes them real.</p>
         <p>What I'm best at is the gap between a cool demo and a product people can actually use — making it <b>reliable, affordable to run, and safe</b> to hand to real users. I move fast, debug the hard live-only failures, and care about cost and correctness, not just notebook accuracy.</p>
         <p>Based in Pune · work in English, Hindi &amp; Marathi · open to on-site, hybrid or remote.</p>
       </div>
@@ -699,7 +702,9 @@
   ];
   document.querySelectorAll('.proj .ptop > div:first-child').forEach(function(head,i){
     var s=document.createElement('span'); s.className='picon'; s.innerHTML=icons[i]||icons[0];
-    head.insertBefore(s, head.firstChild);
+    var tg=document.createElement('div'); tg.className='ptitle';
+    while(head.firstChild) tg.appendChild(head.firstChild);
+    head.appendChild(s); head.appendChild(tg);
   });
 
   /* scripted fallback knowledge */
@@ -715,7 +720,7 @@
     {p:["rag","retriev","vector","embedding","semantic","faiss","qdrant","knowledge base"],r:"RAG is a big part of my work — hybrid search (FAISS / Qdrant / pgvector), heading-based chunking and RAGAS eval harnesses so retrieval is measured, not vibes. One system hit +40–55% precision and dropped latency 2.5s → 300ms."},
     {p:["ocr","document","extract","scan","handwrit","vision"],r:"I built 'Document Reader' — it turns any file (native, scanned, handwritten) into structure-preserved Markdown / HTML / JSON. Ran a bake-off across 10+ vision-language OCR models and got 99–100% word recall on text formats."},
     {p:["stack","skill","tech","tool","framework","what do you use","python"],r:"Python, FastAPI, LangGraph, MCP, OAuth 2.0; RAG with FAISS / Qdrant / pgvector; PyTorch, LoRA/QLoRA, quantization; PostgreSQL / ClickHouse / Redis; Docker, CI/CD, AWS. Multi-provider LLM routing across Gemini / OpenAI / Claude / Groq."},
-    {p:["experience","year","how long","background","senior","fresher"],r:"~1.5 years of production ML/AI across full-time and freelance. Short on paper, but dense — I've shipped agent systems, RAG, OCR and connector infra that real users depend on. I came into this from mechanical engineering and moved fast."},
+    {p:["experience","year","how long","background","senior","fresher"],r:"~1.5 years of full-time production ML/AI across two startups — The Strelema (Feb 2025 – May 2026) then Yukosa. Short on paper, but dense: I've shipped agent systems, RAG, OCR and connector infra that real users depend on. I came into this from mechanical engineering and moved fast."},
     {p:["contact","email","reach","connect","get in touch","linkedin","github","talk to"],r:"Easiest is email: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>. Or LinkedIn (/in/suraj-rajesh-pawar) and GitHub (github.com/Suraj1682). I reply fast."},
     {p:["location","where","based","city","pune","remote"],r:"I'm based in Pune, Maharashtra — open to on-site there, or hybrid/remote anywhere."},
     {p:["marathi","hindi","speak","multilingual","mother tongue","which language"],r:"English, Hindi and Marathi — I switch between them pretty naturally."},
