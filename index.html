@@ -194,6 +194,28 @@
   .node text.sub{fill:var(--muted);font-size:10px}
   .flow{fill:none;stroke:url(#fg);stroke-width:1.8;stroke-dasharray:5 8;animation:dash 1.1s linear infinite}
   @keyframes dash{to{stroke-dashoffset:-26}}
+  /* layered system architecture */
+  .sys{display:flex;flex-direction:column}
+  .layer{display:grid;grid-template-columns:150px 1fr;gap:20px;align-items:center;position:relative;
+    border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:16px 18px;overflow:hidden}
+  .layer::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(var(--violet),var(--cyan));opacity:.6}
+  .layer .lname{font-family:var(--mono);font-size:.74rem;color:var(--cyan);text-align:right;letter-spacing:.02em}
+  .lnodes{display:flex;flex-wrap:wrap;gap:9px}
+  .snode{font-family:var(--mono);font-size:.76rem;padding:9px 13px;border-radius:10px;border:1px solid var(--line2);
+    background:rgba(255,255,255,.04);color:var(--ink);line-height:1.25}
+  .snode small{display:block;font-size:.65rem;color:var(--muted);margin-top:3px;font-family:var(--body)}
+  .snode.hub{border-color:var(--violet-lt);background:rgba(139,92,246,.13);box-shadow:0 0 20px -7px rgba(139,92,246,.6)}
+  .snode.sec{border-color:rgba(34,211,238,.4);background:rgba(34,211,238,.08);color:var(--cyan)}
+  .cap{flex:1 1 150px;font-family:var(--mono);font-size:.8rem;padding:13px 15px;border-radius:12px;color:var(--ink);
+    border:1px solid var(--line2);background:linear-gradient(140deg,rgba(139,92,246,.12),rgba(34,211,238,.06))}
+  .cap small{display:block;font-size:.65rem;color:var(--muted);margin-top:4px;font-family:var(--body);line-height:1.4}
+  .conn{height:24px;position:relative}
+  .conn::before{content:"";position:absolute;left:50%;top:-1px;bottom:-1px;width:2px;transform:translateX(-50%);
+    background:linear-gradient(var(--violet),var(--cyan));opacity:.4}
+  .conn i{position:absolute;left:50%;width:6px;height:6px;border-radius:50%;transform:translateX(-50%);
+    background:var(--cyan);box-shadow:0 0 10px var(--cyan);animation:flowdown 1.9s linear infinite}
+  @keyframes flowdown{0%{top:-4px;opacity:0}20%{opacity:1}85%{opacity:1}100%{top:24px;opacity:0}}
+  @media(max-width:640px){.layer{grid-template-columns:1fr;gap:10px}.layer .lname{text-align:left}}
 
   /* PROJECT ICONS */
   .ptop>div:first-child{display:flex;align-items:center}
@@ -343,25 +365,22 @@
     <div class="reveal">
       <div class="eyebrow">// how it fits together</div>
       <h2 class="stitle">Anatomy of what I build</h2>
-      <p class="ssub">A plain-English request flows through an agent, into an MCP orchestration layer, then out to real tools, data and retrieval — the shape behind the systems below.</p>
+      <p class="ssub">The production agent platform I built, layer by layer — from gateway security down through the agent core, MCP orchestration, capabilities, and the model &amp; data tier underneath.</p>
     </div>
     <div class="arch reveal">
-      <svg viewBox="0 0 900 300" role="img" aria-label="Architecture diagram: a visitor's request flows through an NL assistant and an MCP orchestration layer out to connectors, data stores, a knowledge base and a document reader.">
-        <defs><linearGradient id="fg" x1="0" x2="1"><stop offset="0" stop-color="#8b5cf6"/><stop offset="1" stop-color="#22d3ee"/></linearGradient></defs>
-        <path class="flow" d="M136,148 L186,148"/>
-        <path class="flow" d="M336,148 L396,148"/>
-        <path class="flow" d="M546,148 C591,148 591,46 636,46"/>
-        <path class="flow" d="M546,148 C591,148 591,114 636,114"/>
-        <path class="flow" d="M546,148 C591,148 591,182 636,182"/>
-        <path class="flow" d="M546,148 C591,148 591,250 636,250"/>
-        <g class="node"><rect x="16" y="120" width="120" height="56" rx="12"/><text x="76" y="146" text-anchor="middle">Visitor</text><text x="76" y="162" text-anchor="middle" class="sub">your site</text></g>
-        <g class="node hub"><rect x="186" y="120" width="150" height="56" rx="12"/><text x="261" y="146" text-anchor="middle">NL Assistant</text><text x="261" y="162" text-anchor="middle" class="sub">ReAct agent</text></g>
-        <g class="node hub"><rect x="396" y="120" width="150" height="56" rx="12"/><text x="471" y="146" text-anchor="middle">MCP Layer</text><text x="471" y="162" text-anchor="middle" class="sub">tool orchestration</text></g>
-        <g class="node"><rect x="636" y="24" width="248" height="44" rx="11"/><text x="760" y="43" text-anchor="middle">Connectors</text><text x="760" y="58" text-anchor="middle" class="sub">Slack · Jira · GitHub</text></g>
-        <g class="node"><rect x="636" y="92" width="248" height="44" rx="11"/><text x="760" y="111" text-anchor="middle">Data stores</text><text x="760" y="126" text-anchor="middle" class="sub">PostgreSQL · Redis</text></g>
-        <g class="node"><rect x="636" y="160" width="248" height="44" rx="11"/><text x="760" y="179" text-anchor="middle">Knowledge Base</text><text x="760" y="194" text-anchor="middle" class="sub">RAG · hybrid search</text></g>
-        <g class="node"><rect x="636" y="228" width="248" height="44" rx="11"/><text x="760" y="247" text-anchor="middle">Document Reader</text><text x="760" y="262" text-anchor="middle" class="sub">OCR · extraction</text></g>
-      </svg>
+      <div class="sys">
+        <div class="layer"><span class="lname">Client</span><div class="lnodes"><span class="snode">Web UI · Chat</span><span class="snode">Real-time streaming</span></div></div>
+        <div class="conn"><i></i></div>
+        <div class="layer"><span class="lname">Gateway · Security</span><div class="lnodes"><span class="snode">API gateway + allowlist</span><span class="snode">JWT auth · multi-tenant</span><span class="snode">Per-user / IP rate-limit</span><span class="snode sec">Prompt-injection guard</span></div></div>
+        <div class="conn"><i style="animation-delay:.3s"></i></div>
+        <div class="layer"><span class="lname">Agent Core</span><div class="lnodes"><span class="snode hub">ReAct Agent · LangGraph</span><span class="snode">Structured JSON contract</span><span class="snode">Postgres checkpointer<small>durable multi-instance state</small></span><span class="snode">199-activity catalog</span></div></div>
+        <div class="conn"><i style="animation-delay:.6s"></i></div>
+        <div class="layer"><span class="lname">MCP Orchestration</span><div class="lnodes"><span class="snode hub">Dynamic MCP plugin</span><span class="snode">OAuth 2.0 · DCR + PKCE</span><span class="snode">Live tool discovery</span><span class="snode">Confirmation gating</span><span class="snode">Auto token-refresh ×11</span></div></div>
+        <div class="conn"><i style="animation-delay:.9s"></i></div>
+        <div class="layer"><span class="lname">Capabilities</span><div class="lnodes"><span class="cap">Connectors<small>Slack · Jira · GitHub · Notion · Linear (8+)</small></span><span class="cap">Knowledge Base<small>RAG · hybrid search · RAGAS eval</small></span><span class="cap">Document Reader<small>OCR / VLM · OpenCV</small></span><span class="cap">File Tools<small>Word/Excel/PPT/PDF · 14 charts</small></span></div></div>
+        <div class="conn"><i style="animation-delay:1.2s"></i></div>
+        <div class="layer"><span class="lname">Models · Data</span><div class="lnodes"><span class="snode">Multi-provider routing<small>Gemini · OpenAI · Claude · Groq</small></span><span class="snode">Self-hosted models<small>LoRA/QLoRA · GGUF quant</small></span><span class="snode">PostgreSQL</span><span class="snode">Redis</span><span class="snode">ClickHouse</span><span class="snode sec">Encrypted credential store</span></div></div>
+      </div>
     </div>
   </div>
 </section>
