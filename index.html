@@ -223,6 +223,34 @@
     cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
   .cinput button svg{width:19px;height:19px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
   @media(max-width:460px){#chat{right:12px;left:12px;width:auto;bottom:92px}}
+  #teaser{position:fixed;right:24px;bottom:100px;z-index:39;max-width:250px;background:rgba(10,10,22,.95);
+    backdrop-filter:blur(14px);border:1px solid var(--line2);border-radius:16px;border-bottom-right-radius:5px;
+    padding:13px 16px;font-size:.87rem;line-height:1.45;color:var(--ink);cursor:pointer;
+    box-shadow:0 18px 44px -14px rgba(0,0,0,.65);opacity:0;transform:translateY(12px) scale(.96);
+    pointer-events:none;transition:.35s cubic-bezier(.2,.8,.2,1)}
+  #teaser.show{opacity:1;transform:none;pointer-events:auto}
+  #teaser b{color:var(--cyan);font-weight:600}
+  #teaser .tx{position:absolute;top:-9px;right:-9px;width:23px;height:23px;border-radius:50%;background:var(--void2);
+    border:1px solid var(--line2);color:var(--muted);font-size:.95rem;display:flex;align-items:center;justify-content:center;line-height:1;cursor:pointer}
+  #teaser .tx:hover{color:var(--ink)}
+  @media(max-width:460px){#teaser{right:16px;bottom:94px;max-width:210px}}
+  /* RESUME VIEWER */
+  #rm{position:fixed;inset:0;z-index:60;background:rgba(4,4,10,.82);backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;padding:22px;opacity:0;pointer-events:none;transition:.25s}
+  #rm.open{opacity:1;pointer-events:auto}
+  .rm-box{width:100%;max-width:880px;height:90vh;background:var(--void2);border:1px solid var(--line2);
+    border-radius:16px;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 40px 90px -20px rgba(0,0,0,.8)}
+  .rm-head{display:flex;align-items:center;gap:10px;padding:13px 16px;border-bottom:1px solid var(--line)}
+  .rm-head .t{font-family:var(--disp);font-weight:600;font-size:.95rem;margin-right:auto}
+  .rm-head a{font-family:var(--body);font-weight:600;font-size:.8rem;padding:9px 15px;border-radius:10px;transition:.2s}
+  .rm-head a.dl{background:linear-gradient(135deg,var(--violet),var(--cyan));color:#fff}
+  .rm-head a.ot{border:1px solid var(--line2);color:var(--ink)}
+  .rm-head a.ot:hover{border-color:var(--cyan);color:var(--cyan)}
+  .rm-head .cls{background:none;border:1px solid var(--line2);color:var(--muted);width:34px;height:34px;
+    border-radius:9px;cursor:pointer;font-size:1.25rem;line-height:1;flex-shrink:0}
+  .rm-head .cls:hover{color:var(--ink)}
+  .rm-box iframe{flex:1;width:100%;border:none;background:#fff}
+  @media(max-width:560px){.rm-box{height:86vh}.rm-head .t{font-size:.82rem}.rm-head a{padding:8px 11px;font-size:.74rem}}
 
   @media(prefers-reduced-motion:reduce){
     *{animation:none!important;transition:none!important}
@@ -258,7 +286,7 @@
     <p class="lede">I turn raw LLM capability into <b>shipped product</b> — agentic systems, RAG pipelines, and the auth, state and orchestration that make them survive real users. Built an entire <b>MCP integration layer</b>, a natural-language workflow builder, and RAG serving at 99.3% uptime.</p>
     <div class="cta">
       <a class="btn p" href="#work">Explore the build ↓</a>
-      <a class="btn g" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener">View résumé ↗</a>
+      <a class="btn g" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener" data-resume>View résumé ↗</a>
       <a class="btn g" href="mailto:srp.official.1682@gmail.com">Start a conversation</a>
     </div>
   </div>
@@ -436,7 +464,7 @@
       </div>
       <div class="panel contact" id="contact">
         <div class="rescta">
-          <a class="btn p" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener">View résumé</a>
+          <a class="btn p" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener" data-resume>View résumé</a>
           <a class="btn g" href="Suraj_Pawar_Resume.pdf" download>Download PDF</a>
         </div>
         <a href="mailto:srp.official.1682@gmail.com"><span class="k">email</span>srp.official.1682@gmail.com</a>
@@ -549,10 +577,37 @@
 })();
 </script>
 
+<!-- RESUME VIEWER -->
+<div id="rm" role="dialog" aria-label="Résumé viewer">
+  <div class="rm-box">
+    <div class="rm-head">
+      <span class="t">Suraj Pawar — Résumé</span>
+      <a class="dl" href="Suraj_Pawar_Resume.pdf" download>Download</a>
+      <a class="ot" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener">Open in tab ↗</a>
+      <button class="cls" id="rmx" aria-label="Close résumé">&times;</button>
+    </div>
+    <iframe id="rmframe" title="Suraj Pawar résumé (PDF)"></iframe>
+  </div>
+</div>
+
+<script>
+(function(){
+  var rm=document.getElementById('rm'), frame=document.getElementById('rmframe'),
+      rmx=document.getElementById('rmx'), RES="Suraj_Pawar_Resume.pdf";
+  function open(e){ if(e)e.preventDefault(); if(!frame.getAttribute('src')) frame.setAttribute('src',RES); rm.classList.add('open'); document.body.style.overflow='hidden'; }
+  function close(){ rm.classList.remove('open'); document.body.style.overflow=''; }
+  document.querySelectorAll('[data-resume]').forEach(function(el){ el.addEventListener('click',open); });
+  rmx.addEventListener('click',close);
+  rm.addEventListener('click',function(e){ if(e.target===rm) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+
 <!-- CHAT WIDGET -->
 <button id="fab" aria-label="Chat with Suraj's AI"><span class="ping"></span>
   <svg viewBox="0 0 24 24"><path d="M21 11.5a8.4 8.4 0 0 1-8.5 8.5 8.5 8.5 0 0 1-3.8-.9L3 21l1.9-5.7A8.5 8.5 0 1 1 21 11.5z"/></svg>
 </button>
+<div id="teaser"><button class="tx" id="tdismiss" aria-label="Dismiss">&times;</button><span>👋 Hi! I'm <b>Suraj's AI</b> — ask me why he's a fit for your role.</span></div>
 <div id="chat" role="dialog" aria-label="Chat with Suraj's AI">
   <div class="chead">
     <div class="av">S</div>
@@ -651,9 +706,13 @@
       },650);
     }
   }
-  fab.onclick=function(){ win.classList.contains('open') ? win.classList.remove('open') : openChat(true); };
-  /* auto-open shortly after load, once, without stealing focus */
-  setTimeout(function(){ if(!opened && !win.classList.contains('open')) openChat(false); }, 1800);
+  /* gentle greeting nudge near the button — never covers content */
+  var teaser=document.getElementById('teaser'), tdismiss=document.getElementById('tdismiss'), teased=false;
+  function hideTeaser(){ teaser.classList.remove('show'); }
+  setTimeout(function(){ if(!opened){ teaser.classList.add('show'); teased=true; setTimeout(function(){ if(teased) hideTeaser(); }, 9000); } }, 2600);
+  teaser.addEventListener('click',function(){ teased=false; hideTeaser(); openChat(true); });
+  tdismiss.addEventListener('click',function(e){ e.stopPropagation(); teased=false; hideTeaser(); });
+  fab.onclick=function(){ teased=false; hideTeaser(); win.classList.contains('open') ? win.classList.remove('open') : openChat(true); };
   closeBtn.onclick=function(){ win.classList.remove('open'); };
   sendBtn.onclick=function(){ ask(input.value); };
   input.addEventListener('keydown',function(e){ if(e.key==='Enter') ask(input.value); });
