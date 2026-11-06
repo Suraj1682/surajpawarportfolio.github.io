@@ -643,15 +643,17 @@
     untype(); bubble(out,'bot'); history.push({role:'assistant',content:out.replace(/<[^>]+>/g,'')}); busy=false;
   }
 
-  function openChat(){
-    win.classList.add('open'); input.focus();
+  function openChat(focus){
+    win.classList.add('open'); if(focus) input.focus();
     if(!opened){ opened=true; typing();
       setTimeout(function(){ untype();
-        bubble("Hey! 👋 I'm Suraj's AI — I answer in his voice. Ask me about his projects, stack, or whether he's open to a role.",'bot'); addQuick();
+        bubble("Hey! 👋 I'm Suraj's AI — I answer in his voice. Ask me about his projects, stack, or whether he's a fit for your opening.",'bot'); addQuick();
       },650);
     }
   }
-  fab.onclick=function(){ win.classList.contains('open') ? win.classList.remove('open') : openChat(); };
+  fab.onclick=function(){ win.classList.contains('open') ? win.classList.remove('open') : openChat(true); };
+  /* auto-open shortly after load, once, without stealing focus */
+  setTimeout(function(){ if(!opened && !win.classList.contains('open')) openChat(false); }, 1800);
   closeBtn.onclick=function(){ win.classList.remove('open'); };
   sendBtn.onclick=function(){ ask(input.value); };
   input.addEventListener('keydown',function(e){ if(e.key==='Enter') ask(input.value); });
