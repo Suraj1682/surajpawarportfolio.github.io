@@ -205,7 +205,7 @@
     <div class="metrics reveal">
       <div class="met"><div class="n" data-to="46" data-suf="%" data-pre="~">~0%</div><div class="l">LLM cost cut, on-demand retrieval</div></div>
       <div class="met"><div class="n" data-to="8" data-suf="+">0</div><div class="l">enterprise connectors shipped</div></div>
-      <div class="met"><div class="n" data-to="55" data-suf="%" data-pre="↑">0%</div><div class="l">RAG precision gain</div></div>
+      <div class="met"><div class="n" data-to="700" data-suf="+">0</div><div class="l">automated tests, CI-backed</div></div>
       <div class="met"><div class="n" data-to="99.3" data-suf="%">0%</div><div class="l">production uptime on AWS</div></div>
     </div>
   </div>
@@ -217,22 +217,22 @@
     <div class="reveal">
       <div class="eyebrow">// selected builds</div>
       <h2 class="stitle">Systems I've shipped</h2>
-      <p class="ssub">Production work across agentic AI, LLM tooling and retrieval — not demos, things people use.</p>
+      <p class="ssub">Production work across agentic AI, LLM tooling, retrieval and document intelligence — not demos, things people use.</p>
     </div>
 
     <div class="proj reveal">
       <div class="ptop">
-        <div><h3>MCP &amp; Connectors Integration Layer</h3><div class="org">MetaFlow · Yukosa</div></div>
+        <div><h3>MCP &amp; Connector Integration Layer</h3><div class="org">MetaFlow · Yukosa</div></div>
         <span class="ptag">Agentic AI</span>
       </div>
-      <p>A generic plugin letting a no-code platform connect <b>any</b> remote MCP server on demand — live OAuth, full credential lifecycle, proven against real enterprise workspaces.</p>
+      <p>A pure-MCP system letting a no-code platform connect <b>any</b> remote MCP server on demand — via a generic plugin in the agent's tool-orchestration layer, reusing the existing request contract with no new API surface.</p>
       <ul>
-        <li>Full OAuth 2.0 flow (Dynamic Client Registration + PKCE) with static-client fallback, tested end-to-end across Slack, Jira, GitHub, Notion &amp; Linear</li>
-        <li>Live tool discovery (19–27 tools/server) with confirmation-gating on destructive actions</li>
-        <li>Encrypted-at-rest credential storage, per-user/org scoping, vendor-side token revocation</li>
-        <li>Hardened 8+ connectors — caught a memory-poisoning bug and Graph API breaks only visible in live testing</li>
+        <li>Full OAuth 2.0 (Dynamic Client Registration + PKCE) with static-client fallback, proven end-to-end across Slack, Jira, GitHub, Notion &amp; Linear; live tool discovery (19–27 tools/server) with confirmation-gating on destructive actions</li>
+        <li>Hardened 8+ enterprise connectors with automatic token refresh across 11 — a shared 401 detector refreshes &amp; retries before the agent ever sees a failure; encrypted-at-rest credentials, per-user/org scoping, vendor-side revocation</li>
+        <li>Two-layer prompt-injection guardrail + Meta Prompt Guard (86M classifier) tuned to jailbreak-only: 0 false positives, 8/10 attacks caught</li>
+        <li>In-agent file tools generating Word/Excel/PPT/PDF with 14 chart types and an exact-totals aggregation engine (computed, not model-guessed)</li>
       </ul>
-      <div class="chips"><span class="chip">MCP</span><span class="chip">OAuth 2.0 / PKCE</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span></div>
+      <div class="chips"><span class="chip">MCP</span><span class="chip">OAuth 2.0 / PKCE</span><span class="chip">FastAPI</span><span class="chip">PostgreSQL</span><span class="chip">AI Security</span></div>
     </div>
 
     <div class="proj reveal">
@@ -242,12 +242,40 @@
       </div>
       <p>A connector-aware ReAct agent turning plain English into executable drag-and-drop workflows across 199 activities — deterministic, durable, cheaper to run.</p>
       <ul>
-        <li>Cut LLM operating cost ~46% via on-demand, vector-less (PageIndex-style) retrieval over the activity catalog</li>
-        <li>Deterministic output through a structured JSON contract preserving step-to-step dataflow wiring</li>
-        <li>Postgres-backed LangGraph checkpointer — state durable across restarts and instances</li>
-        <li>Fixed a critical JWT claim-mismatch silently denying org data to every logged-in user; added per-user/IP rate limiting</li>
+        <li>Cut LLM operating cost ~46% via on-demand, vector-less (PageIndex-style) retrieval; deterministic builds through a structured JSON contract that removed a second LLM call</li>
+        <li>Postgres-backed LangGraph checkpointer — state durable across restarts &amp; instances, with session resume/list/delete</li>
+        <li>Fixed a critical JWT claim-mismatch silently denying org data to every logged-in user; added per-user/IP rate limiting and closed an auth-ordering hole</li>
+        <li>Built the test suite from zero to 700+ automated tests with CI, an eval harness &amp; cost tracking; killed production 504s via parallelized catalog lookups</li>
       </ul>
-      <div class="chips"><span class="chip">LangGraph</span><span class="chip">ReAct agents</span><span class="chip">Structured output</span><span class="chip">Python</span></div>
+      <div class="chips"><span class="chip">LangGraph</span><span class="chip">ReAct agents</span><span class="chip">Structured output</span><span class="chip">Multi-tenant</span><span class="chip">Python</span></div>
+    </div>
+
+    <div class="proj reveal">
+      <div class="ptop">
+        <div><h3>Knowledge Base &amp; RAG System</h3><div class="org">MetaFlow · Yukosa</div></div>
+        <span class="ptag">RAG</span>
+      </div>
+      <p>A persistent, org/project-scoped knowledge-base layer with reusable KBs and a measured retrieval pipeline.</p>
+      <ul>
+        <li>Pluggable embeddings seam (OpenAI / Gemini, 768-dim) with a full ingest → store → retrieve package and a KB-only workflow node</li>
+        <li>Hybrid search (semantic + keyword rank-fusion) with ingest-time summaries and optional small-model re-rank</li>
+        <li>RAGAS evaluation harness (50-question key) to measure grounding — measured re-rank at ~8s/question for no gain and cut it; added SSRF protection &amp; cross-user isolation</li>
+      </ul>
+      <div class="chips"><span class="chip">Hybrid search</span><span class="chip">pgvector</span><span class="chip">RAGAS</span><span class="chip">Embeddings</span></div>
+    </div>
+
+    <div class="proj reveal">
+      <div class="ptop">
+        <div><h3>Document Reader — OCR &amp; Extraction Engine</h3><div class="org">Yukosa</div></div>
+        <span class="ptag">Vision / ML</span>
+      </div>
+      <p>A standalone service turning any file — native, scanned or handwritten — into structure-preserved Markdown, HTML &amp; a JSON block tree with a quality verdict.</p>
+      <ul>
+        <li>Ran a bake-off across 10+ vision-language OCR models (Qwen2.5-VL, GLM-OCR, DeepSeek-OCR, PaddleOCR-VL…); benchmarked GGUF quantization via llama.cpp and ran LoRA/QLoRA fine-tuning on Kaggle GPUs</li>
+        <li>Word-recall 99–100% on text formats, up to 100% on corrected photos; 211 test checks</li>
+        <li>Tilt / perspective / lighting correction, per-page quality scoring, lossless table rebuilds, optional vision-model re-read</li>
+      </ul>
+      <div class="chips"><span class="chip">VLM OCR</span><span class="chip">Docling</span><span class="chip">llama.cpp / GGUF</span><span class="chip">LoRA / QLoRA</span><span class="chip">OpenCV</span></div>
     </div>
 
     <div class="proj reveal">
@@ -259,7 +287,7 @@
       <ul>
         <li>SLM eval harness benchmarking open models (Gemma 12B, Qwen) for NL-to-SQL with live ClickHouse execution — caught a model whose queries parsed but failed to run, missed by 8 prior structural-only rounds</li>
         <li>Three-tier (major/data/minor) versioning with no-op detection and pre-refresh checkpoints</li>
-        <li>Cut API latency via connection pooling on high-traffic endpoints</li>
+        <li>Cut API latency via connection pooling; fixed chart-color accessibility across 11 industry palettes</li>
       </ul>
       <div class="chips"><span class="chip">Model eval</span><span class="chip">NL-to-SQL</span><span class="chip">ClickHouse</span><span class="chip">Quantization</span></div>
     </div>
