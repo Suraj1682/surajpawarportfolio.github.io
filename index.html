@@ -56,6 +56,30 @@
   .hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
   #graph{position:absolute;inset:0;z-index:0;width:100%;height:100%}
   .hero .wrap{position:relative;z-index:2}
+  .hgrid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+  .hleft{text-align:left}
+  .hgrid h1{font-size:clamp(2.1rem,5vw,4.4rem);white-space:nowrap}
+  .hero h1 .word{display:inline-block;white-space:nowrap}
+  .hleft .lede{max-width:530px}
+  @media(max-width:880px){.hgrid{grid-template-columns:1fr;gap:38px}}
+  .hcard{position:relative;border:1px solid var(--line2);border-radius:22px;padding:28px;overflow:hidden;
+    background:rgba(255,255,255,.045);backdrop-filter:blur(10px);box-shadow:0 30px 70px -30px rgba(139,92,246,.45)}
+  .hcard::before{content:"";position:absolute;inset:0;border-radius:22px;padding:1px;
+    background:linear-gradient(130deg,var(--violet),var(--cyan));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor;mask-composite:exclude;opacity:.5;pointer-events:none}
+  .hc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+  .hc-top .lbl{font-family:var(--mono);font-size:.76rem;color:var(--cyan)}
+  .hc-live{font-family:var(--mono);font-size:.7rem;color:var(--cyan);display:flex;align-items:center;gap:7px}
+  .hc-live::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse 2s infinite}
+  .hc-metrics{display:grid;grid-template-columns:1fr 1fr;gap:18px 16px}
+  .hc-metrics b{display:block;font-family:var(--disp);font-size:1.85rem;font-weight:700;letter-spacing:-.02em;
+    background:linear-gradient(120deg,var(--ink),var(--violet-lt));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .hc-metrics span{font-size:.76rem;color:var(--muted)}
+  .hc-div{height:1px;background:var(--line);margin:22px 0}
+  .hc-roles{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+  .hc-ask{width:100%;padding:13px;border-radius:12px;border:1px solid rgba(34,211,238,.3);cursor:pointer;
+    background:rgba(34,211,238,.08);color:var(--cyan);font-family:var(--body);font-weight:600;font-size:.9rem;transition:.2s}
+  .hc-ask:hover{background:rgba(34,211,238,.16);transform:translateY(-1px)}
   .status{display:inline-flex;align-items:center;gap:9px;font-family:var(--mono);font-size:.76rem;
     color:var(--cyan);background:rgba(34,211,238,.07);border:1px solid rgba(34,211,238,.22);
     padding:7px 15px;border-radius:30px;margin-bottom:30px}
@@ -280,29 +304,34 @@
 <section class="hero">
   <canvas id="graph" aria-hidden="true"></canvas>
   <div class="wrap">
-    <span class="status"><span class="dot"></span>Available for AI product &amp; engineering roles</span>
-    <h1 id="name"></h1>
-    <div class="role"><span id="rt"></span><span class="cur">▊</span></div>
-    <p class="lede">I turn raw LLM capability into <b>shipped product</b> — agentic systems, RAG pipelines, and the auth, state and orchestration that make them survive real users. Built an entire <b>MCP integration layer</b>, a natural-language workflow builder, and RAG serving at 99.3% uptime.</p>
-    <div class="cta">
-      <a class="btn p" href="#work">Explore the build ↓</a>
-      <a class="btn g" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener" data-resume>View résumé ↗</a>
-      <a class="btn g" href="mailto:srp.official.1682@gmail.com">Start a conversation</a>
+    <div class="hgrid">
+      <div class="hleft">
+        <span class="status"><span class="dot"></span>Available for AI / ML, Computer Vision &amp; Python roles</span>
+        <h1 id="name"></h1>
+        <div class="role"><span id="rt"></span><span class="cur">▊</span></div>
+        <p class="lede">I turn raw LLM capability into <b>shipped product</b> — agentic systems, RAG, computer vision and the model-level work (fine-tuning, quantization, inference) that makes them run cheaply in production.</p>
+        <div class="cta">
+          <a class="btn p" href="#work">Explore the build ↓</a>
+          <a class="btn g" href="Suraj_Pawar_Resume.pdf" target="_blank" rel="noopener" data-resume>View résumé ↗</a>
+        </div>
+      </div>
+      <aside class="hcard reveal">
+        <div class="hc-top"><span class="lbl">// snapshot</span><span class="hc-live">open to work</span></div>
+        <div class="hc-metrics">
+          <div><b data-to="46" data-pre="~" data-suf="%">~0%</b><span>LLM cost cut</span></div>
+          <div><b data-to="99.3" data-suf="%">0%</b><span>prod uptime</span></div>
+          <div><b data-to="8" data-suf="+">0</b><span>connectors shipped</span></div>
+          <div><b data-to="700" data-suf="+">0</b><span>automated tests</span></div>
+        </div>
+        <div class="hc-div"></div>
+        <div class="hc-roles">
+          <span class="chip">AI / ML Engineer</span><span class="chip">Forward Deployed</span><span class="chip">Computer Vision</span><span class="chip">LLM / GenAI</span><span class="chip">Python Dev</span>
+        </div>
+        <button class="hc-ask" id="askai">💬&nbsp; Ask my AI anything →</button>
+      </aside>
     </div>
   </div>
   <div class="scroll-hint"><span>scroll</span><span class="bar"></span></div>
-</section>
-
-<!-- METRICS -->
-<section style="padding-top:40px">
-  <div class="wrap">
-    <div class="metrics reveal">
-      <div class="met"><div class="n" data-to="46" data-suf="%" data-pre="~">~0%</div><div class="l">LLM cost cut, on-demand retrieval</div></div>
-      <div class="met"><div class="n" data-to="8" data-suf="+">0</div><div class="l">enterprise connectors shipped</div></div>
-      <div class="met"><div class="n" data-to="700" data-suf="+">0</div><div class="l">automated tests, CI-backed</div></div>
-      <div class="met"><div class="n" data-to="99.3" data-suf="%">0%</div><div class="l">production uptime on AWS</div></div>
-    </div>
-  </div>
 </section>
 
 <!-- HOW -->
@@ -394,11 +423,26 @@
       </div>
       <p>A standalone service turning any file — native, scanned or handwritten — into structure-preserved Markdown, HTML &amp; a JSON block tree with a quality verdict.</p>
       <ul>
-        <li>Ran a bake-off across 10+ vision-language OCR models (Qwen2.5-VL, GLM-OCR, DeepSeek-OCR, PaddleOCR-VL…); benchmarked GGUF quantization via llama.cpp and ran LoRA/QLoRA fine-tuning on Kaggle GPUs</li>
+        <li>Native, scanned and handwritten input handled end to end (Docling + PyMuPDF / OpenCV, native Office readers)</li>
         <li>Word-recall 99–100% on text formats, up to 100% on corrected photos; 211 test checks</li>
         <li>Tilt / perspective / lighting correction, per-page quality scoring, lossless table rebuilds, optional vision-model re-read</li>
       </ul>
-      <div class="chips"><span class="chip">VLM OCR</span><span class="chip">Docling</span><span class="chip">llama.cpp / GGUF</span><span class="chip">LoRA / QLoRA</span><span class="chip">OpenCV</span></div>
+      <div class="chips"><span class="chip">VLM OCR</span><span class="chip">Docling</span><span class="chip">Computer Vision</span><span class="chip">OpenCV</span><span class="chip">PyMuPDF</span></div>
+    </div>
+
+    <div class="proj reveal">
+      <div class="ptop">
+        <div><h3>Model Fine-tuning, Quantization &amp; Inference</h3><div class="org">Yukosa · R&amp;D</div></div>
+        <span class="ptag">Model Engineering</span>
+      </div>
+      <p>Model-level work to run strong models accurately and cheaply on constrained hardware — fine-tuning, quantization and inference benchmarking, measured honestly.</p>
+      <ul>
+        <li>Fine-tuned vision-language OCR models with LoRA / QLoRA on Kaggle GPUs — benchmarked against a 55.7% zero-shot baseline and reported honestly when fine-tuning didn't beat it</li>
+        <li>Benchmarked GGUF quantization via llama.cpp down to sub-4-bit; produced real CPU-only inference numbers (two-stage pipeline, 5/5 accuracy at 495s/page) and a per-page cost model</li>
+        <li>Ran model bake-offs across 10+ open models (Qwen2.5-VL, GLM-OCR, DeepSeek-OCR, PaddleOCR-VL, Gemma, Qwen) for OCR and NL-to-SQL with live execution validation</li>
+        <li>Explored MoE-streaming (Colibri) to run a 35B-class model (Qwen3.6-35B-A3B) on limited hardware</li>
+      </ul>
+      <div class="chips"><span class="chip">LoRA / QLoRA</span><span class="chip">GGUF / llama.cpp</span><span class="chip">Quantization</span><span class="chip">Model eval</span><span class="chip">Inference</span></div>
     </div>
 
     <div class="proj reveal">
@@ -441,7 +485,8 @@
     <div class="skills reveal">
       <div class="sk"><h4>agentic_ai.llm</h4><div class="chips"><span class="chip">LangGraph</span><span class="chip">MCP</span><span class="chip">ReAct agents</span><span class="chip">Multi-provider routing</span><span class="chip">Cost optimization</span></div></div>
       <div class="sk"><h4>rag.vector_search</h4><div class="chips"><span class="chip">FAISS</span><span class="chip">Qdrant</span><span class="chip">Hybrid search</span><span class="chip">Semantic chunking</span><span class="chip">embeddings</span></div></div>
-      <div class="sk"><h4>ml.deep_learning</h4><div class="chips"><span class="chip">LLMs / NLP</span><span class="chip">Transformers</span><span class="chip">LoRA / QLoRA</span><span class="chip">Quantization</span><span class="chip">PyTorch</span></div></div>
+      <div class="sk"><h4>models.finetune_inference</h4><div class="chips"><span class="chip">LoRA / QLoRA fine-tuning</span><span class="chip">GGUF / llama.cpp</span><span class="chip">Quantization</span><span class="chip">Model serving</span><span class="chip">SLM / model eval</span><span class="chip">Self-hosting</span></div></div>
+      <div class="sk"><h4>ml.deep_learning</h4><div class="chips"><span class="chip">LLMs / NLP</span><span class="chip">Transformers</span><span class="chip">Computer Vision</span><span class="chip">CNN / LSTM</span><span class="chip">PyTorch</span><span class="chip">OpenCV</span></div></div>
       <div class="sk"><h4>backend.data</h4><div class="chips"><span class="chip">Python</span><span class="chip">FastAPI</span><span class="chip">OAuth 2.0</span><span class="chip">PostgreSQL</span><span class="chip">ClickHouse</span><span class="chip">Redis</span></div></div>
       <div class="sk"><h4>devops.cloud</h4><div class="chips"><span class="chip">Docker</span><span class="chip">GitLab CI/CD</span><span class="chip">AWS</span><span class="chip">Git</span></div></div>
       <div class="sk"><h4>ai.tooling</h4><div class="chips"><span class="chip">Claude Code</span><span class="chip">Cursor</span><span class="chip">Copilot</span></div></div>
@@ -485,16 +530,21 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* name letter drop */
-  var name="Suraj Pawar", host=document.getElementById('name'), html="";
-  for(var i=0;i<name.length;i++){
-    var c=name[i]; if(c===' '){html+=' ';continue;}
-    var cls = i>5 ? 'l shine' : 'l';
-    html+='<span class="'+cls+'" style="animation-delay:'+(0.15+i*0.05)+'s">'+c+'</span>';
-  }
+  var host=document.getElementById('name'), words="Suraj Pawar".split(' '), html="", idx=0;
+  words.forEach(function(w,wi){
+    html+='<span class="word">';
+    for(var j=0;j<w.length;j++){
+      var cls = wi>0 ? 'l shine' : 'l';
+      html+='<span class="'+cls+'" style="animation-delay:'+(0.15+idx*0.05)+'s">'+w[j]+'</span>';
+      idx++;
+    }
+    html+='</span>';
+    if(wi<words.length-1){ html+=' '; idx++; }
+  });
   host.innerHTML=html;
 
   /* role typewriter */
-  var roles=["AI Product Builder","Agentic Systems Engineer","LLM & RAG Specialist","MCP Integration Engineer"],
+  var roles=["AI Product Builder","Forward Deployed Engineer","Machine Learning Engineer","Computer Vision Engineer","LLM & RAG Engineer","Python Developer","Agentic Systems Engineer"],
       rt=document.getElementById('rt'), ri=0,ci=0,del=false;
   function type(){
     var w=roles[ri];
@@ -655,7 +705,11 @@
   /* scripted fallback knowledge */
   var kb=[
     {p:["why hire","why should","why you","why pick","why choose","best choice","best candidate","best person","right fit","good fit","right person","fit for","best fit","suitable","a fit","why are you"],r:"Honestly? Because I bridge the gap most can't — from demo to a product that survives real users. I've shipped an MCP integration layer with full OAuth, a 199-activity agent that cut LLM cost ~46%, RAG at +40–55% precision, and an OCR engine at 99–100% recall — and I fixed the live-only failures that only show up in production (a JWT bug denying every logged-in user, a model that passed 8 review rounds but failed execution). Tell me what your opening needs and I'll map my experience to it point by point. For specifics: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>."},
-    {p:["availab","hiring","open to","open for","looking for","notice period","joining","relocat","opportunit","vacan","position","recruit"],r:"Yes — I'm open to AI/ML and AI-product roles right now (on-site, hybrid or remote). Fastest way in is email: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>."},
+    {p:["face client","client-facing","client facing","clients","customer","stakeholder","communicat","collaborat","team player","soft skill","present to","work with people"],r:"Yes — I'm comfortable client-facing. I ran a direct client engagement on Datalyon, coordinated across Java / DevOps / Frontend teams, wrote requirements and handover docs, and turned customer needs into shipped features. That blend of deep engineering plus working with people is exactly why Forward Deployed Engineer roles fit me."},
+    {p:["what roles","which roles","what positions","roles are you","kind of role","python developer","forward deployed","fde","open to","type of role"],r:"I'm open to a range: AI / ML Engineer, Forward Deployed Engineer, LLM / GenAI Engineer, Computer Vision Engineer, Python Developer and Applied AI Engineer — on-site, hybrid or remote. Tell me which one you're hiring for and I'll make the case."},
+    {p:["computer vision","opencv","deepfake","image classif","object detect","vision model"],r:"Computer vision is part of my toolkit — I built an OCR / extraction engine on a bake-off of 10+ vision-language models (99–100% word recall) and a deepfake-detection pipeline (CNN+LSTM with MTCNN face alignment). Comfortable with OpenCV, PyTorch and VLMs."},
+    {p:["fine-tun","finetune","fine tun","quantiz","gguf","llama.cpp","inference","self-host","self host","model eval","lora","qlora"],r:"Model-level work is a strength: LoRA/QLoRA fine-tuning on Kaggle GPUs, GGUF quantization via llama.cpp down to sub-4-bit, honest benchmarking vs zero-shot baselines, CPU-only inference cost models, and a self-hosted model migration with live-execution eval. I optimise for accuracy AND cost, not just one."},
+    {p:["availab","hiring","looking for","notice period","joining","relocat","opportunit","vacan","recruit","hire me"],r:"Yes — I'm open to AI/ML, Computer Vision and Python roles right now (on-site, hybrid or remote). Fastest way in is email: <a href='mailto:"+EMAIL+"'>"+EMAIL+"</a>."},
     {p:["best","strongest","favou","favor","proud","impressive","top project"],r:"Probably the MCP &amp; Connector Integration Layer at MetaFlow — it lets the platform connect any remote MCP server on demand, with full OAuth (DCR + PKCE), 8+ hardened connectors and a prompt-injection guardrail. Hard problem, and it's in production."},
     {p:["mcp","agent","agentic","orchestr","react","langgraph","workflow","automation"],r:"Agentic systems are my core. I built a 199-activity ReAct agent that turns plain English into executable workflows, plus a pure-MCP layer so it can use any MCP server's tools. Cut LLM cost ~46% with on-demand retrieval instead of stuffing the prompt."},
     {p:["rag","retriev","vector","embedding","semantic","faiss","qdrant","knowledge base"],r:"RAG is a big part of my work — hybrid search (FAISS / Qdrant / pgvector), heading-based chunking and RAGAS eval harnesses so retrieval is measured, not vibes. One system hit +40–55% precision and dropped latency 2.5s → 300ms."},
@@ -713,6 +767,8 @@
   teaser.addEventListener('click',function(){ teased=false; hideTeaser(); openChat(true); });
   tdismiss.addEventListener('click',function(e){ e.stopPropagation(); teased=false; hideTeaser(); });
   fab.onclick=function(){ teased=false; hideTeaser(); win.classList.contains('open') ? win.classList.remove('open') : openChat(true); };
+  var askBtn=document.getElementById('askai');
+  if(askBtn) askBtn.onclick=function(){ teased=false; hideTeaser(); openChat(true); };
   closeBtn.onclick=function(){ win.classList.remove('open'); };
   sendBtn.onclick=function(){ ask(input.value); };
   input.addEventListener('keydown',function(e){ if(e.key==='Enter') ask(input.value); });
